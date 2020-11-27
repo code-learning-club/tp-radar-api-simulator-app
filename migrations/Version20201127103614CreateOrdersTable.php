@@ -13,7 +13,7 @@ class Version20201127103614CreateOrdersTable extends Migration
         $this->create("orders", function (SQLGenerator $table) {
             $table->addString('id');
             $table->addString('order_id', ['size' => 255, 'nullable' => true]);
-            $table->addString('status', ['default' => 'pending']);
+            $table->addString('status', ['default' => 'waiting']);
             $table->addTimestamps();
         });
     }

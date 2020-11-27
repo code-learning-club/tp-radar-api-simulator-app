@@ -15,6 +15,26 @@ class ManagerController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return $this->render('welcome');
+        return $this->render('index');
+    }
+
+    /**
+     * Get the order list
+     *
+     * @return mixed
+     */
+    public function getOrders()
+    {
+        return $this->render('order');
+    }
+
+    /**
+     * Get the order list
+     *
+     * @return mixed
+     */
+    public function getCurrentCarts()
+    {
+        return $this->render('cart');
     }
 }

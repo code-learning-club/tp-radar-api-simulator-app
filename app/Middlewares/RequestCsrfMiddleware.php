@@ -12,6 +12,7 @@ class RequestCsrfMiddleware extends CsrfMiddleware
     public function preventOn()
     {
         return [
+            "/api/*"
         ];
     }
 }
