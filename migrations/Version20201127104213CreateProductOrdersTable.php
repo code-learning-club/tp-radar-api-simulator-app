@@ -13,7 +13,7 @@ class Version20201127104213CreateProductOrdersTable extends Migration
         $this->create("product_orders", function (SQLGenerator $table) {
             $table->addIncrement('id');
             $table->addInteger('product_id');
-            $table->addString('order_id');
+            $table->addInteger('order_id');
             $table->addInteger('quantity');
             $table->addTimestamps();
         });

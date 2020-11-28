@@ -84,11 +84,8 @@ class ProductService
     {
         $order = $this->order->where('status', 'pending')->first();
 
-        $order_id = create_guid();
-
         if (is_null($order)) {
-            $order = $this->order->create(['id' => $order_id, 'status' => 'waiting']);
-            $order->id = $order_id;
+            $order = $this->order->create(['status' => 'waiting']);
         } else {
             $this->productOrder->where('order_id', $order->id)->delete();
         }
@@ -96,7 +93,7 @@ class ProductService
         foreach ($carts as $cart) {
             $this->productOrder->create([
                 'product_id' => $cart['id'],
-                'order_id' => $order_id,
+                'order_id' => $order->id,
                 'quantity' => $cart['quantity'],
             ]);
         }
@@ -107,11 +104,11 @@ class ProductService
     /**
      * Update order status
      *
-     * @param string $order_id
+     * @param int $order_id
      * @param array $data
      * @return mixed
      */
-    public function updateOrder(string $order_id, array $data)
+    public function updateOrder(int $order_id, array $data)
     {
         return $this->order->where('id', $order_id)->update($data);
     }

@@ -7,13 +7,6 @@ use Bow\Database\Barry\Model;
 class Order extends Model
 {
     /**
-     * Define if model are going to use autoincrement
-     *
-     * @var boolean
-     */
-    protected $auto_increment = false;
-
-    /**
      * Get the order product list
      * 
      * @return array

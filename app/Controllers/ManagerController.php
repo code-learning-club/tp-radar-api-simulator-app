@@ -37,4 +37,14 @@ class ManagerController extends Controller
     {
         return $this->render('cart');
     }
+
+    /**
+     * Show the credit card page
+     *
+     * @return mixed
+     */ 
+    public function showCreditCard()
+    {
+        return $this->render('card');
+    }
 }

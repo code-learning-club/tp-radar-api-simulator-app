@@ -36,6 +36,17 @@ const CartIndex = () => {
       })
   }
 
+  const onOrderWithIntegredCard = () => {
+    fetch('/api/orders/card', {
+      method: 'POST'
+    }).then(res => res.json())
+      .then(data => {
+        setIsPayment(true)
+        window.location.assign('/cards?order_id=' + data.id)
+        setCarts([])
+      })
+  }
+
   if (!isLoaded) {
     return (
       <PageContainer>
@@ -44,7 +55,7 @@ const CartIndex = () => {
     )
   }
 
-  if (!isPayment) {
+  if (isPayment) {
     return (
       <PageContainer>
         <Loader message="Chargement de la page de paiement..." />
@@ -78,13 +89,13 @@ const CartIndex = () => {
       <br />
       <h4 className="text-center font-weight-bolder">Total: {total} FCFA</h4>
       <div className="text-center font-weight-bolder">
-        <button className="btn btn-danger" onClick={onClearCart}>ANNULER</button>{" "}
-        <button className="btn btn-primary" onClick={onOrderProcess}>COMMANDER</button>
+        <button className="btn btn-primary mt-1" onClick={onOrderProcess}>PAYER VIA RADAR GATEWAY</button>{" "}
+        <button className="btn btn-success mt-1" onClick={onOrderWithIntegredCard}>PAYER VIA CARTE DE CRÉDIT INTEGRER</button>{" "}
+        <button className="btn btn-danger mt-1" onClick={onClearCart}>ANNULER LA COMMANDE</button>
       </div>
     </PageContainer>
   )
 }
-
 
 if (document.getElementById('root')) {
   ReactDOM.render(<CartIndex />, document.getElementById('root'))
