@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\Controller;
 use Bow\Http\Request;
 use App\Services\ProductService;
+use App\Services\RadarPaymentService;
 
 class ApiController extends Controller
 {
@@ -131,12 +132,36 @@ class ApiController extends Controller
      * Process Order
      *
      * @param Request $request
+     * @param RadarPaymentServive $radarPaymentServive
      * @return mixed
      */
-    public function processOrder(Request $request)
+    public function processOrder(Request $request, RadarPaymentService $radarPaymentService)
     {
         $carts = $request->session()->get('carts', []);
 
-        $this->productService->createOrder($carts);
+        $order = $this->productService->createOrder($carts);
+
+        $request->session()->add('carts', []);
+        $order->where('id', $order->id)->update(['status' => 'pending']);
+
+        $response = $radarPaymentService->register($order->id, $amount = $order->getAmounts());
+
+        $order->order_id = $response['orderId'];
+        $order->form_url = $response['formUrl'];
+
+        $order->where('id', $order->id)->update(['order_id' => $response['orderId']]);
+
+        return $order;
+    }
+
+    /**
+     * Process payment callback
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function processPaymentCallback(Request $request)
+    {
+
     }
 }

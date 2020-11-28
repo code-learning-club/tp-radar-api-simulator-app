@@ -87,12 +87,11 @@ class ProductService
         $order_id = create_guid();
 
         if (is_null($order)) {
-            $order = $this->order->create(['id' => $order_id]);
+            $order = $this->order->create(['id' => $order_id, 'status' => 'waiting']);
+            $order->id = $order_id;
         } else {
             $this->productOrder->where('order_id', $order->id)->delete();
         }
-
-        $products = [];
 
         foreach ($carts as $cart) {
             $this->productOrder->create([
