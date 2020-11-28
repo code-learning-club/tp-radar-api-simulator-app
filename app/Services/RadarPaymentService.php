@@ -75,14 +75,20 @@ class RadarPaymentService
      * @param string $radar_order_id
      * @return mixed
      */
-    public function makeCardPayment(string $radar_order_id)
+    public function makeCardPayment(string $radar_order_id, string $pan, string $cvc, string $year, string $month)
     {
         $ch = curl_init();
 
         $post_fields = http_build_query([
-            "orderId" => $radar_order_id,
             "userName" => "sandbox-api",
-            "password" => "sandbox-api"
+            "password" => "sandbox-api",
+            "\$PAN" => $pan,
+            "\$CVC" => $cvc,
+            "MDORDER" => $radar_order_id,
+            "YYYY" => $year,
+            "MM" => $month,
+            "TEXT" => "Card Holder",
+            "ip" => $_SERVER['REMOTE_ADDR'],
         ]);
 
         curl_setopt($ch, CURLOPT_URL, $this->base_url . '/paymentorder.do');
@@ -91,6 +97,9 @@ class RadarPaymentService
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_response = json_decode(curl_exec($ch), true);
+        if ($server_response['errorCode'] == 0) {
+            $server_response['ascRedirect'] = 'https://sandbox.radarpayment.online/payment/acsRedirect.do?orderId='.$radar_order_id;
+        }
 
         return $server_response;
     }

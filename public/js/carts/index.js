@@ -262,13 +262,13 @@ var CartIndex = function CartIndex() {
   };
 
   var onOrderWithIntegredCard = function onOrderWithIntegredCard() {
-    fetch('/api/orders/card', {
+    fetch('/api/orders', {
       method: 'POST'
     }).then(function (res) {
       return res.json();
     }).then(function (data) {
       setIsPayment(true);
-      window.location.assign('/cards?order_id=' + data.id);
+      window.location.assign('/cards?order_id=' + data.order_id);
       setCarts([]);
     });
   };

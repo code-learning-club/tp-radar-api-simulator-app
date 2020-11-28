@@ -1,20 +1,22 @@
-import { event } from 'jquery'
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import PageContainer from '../PageContainer'
+import Loader from '../Loader'
 
 const CardIndex = () => {
   const [orderId, setOrderId] = useState(undefined)
   const [pan, setPan] = useState(undefined)
   const [month, setMonth] = useState(undefined)
   const [cvc, setCvc] = useState(undefined)
+  const [isPaymentStarted, setIsPaymentStarted] = useState(false)
+  const [isPaymentStartedMessage, setIsPaymentStartedMessage] = useState("Paiement en cours...")
 
   useEffect(() => {
     setOrderId(window.location.search.split("?")[1].split("=")[1])
   }, [])
 
   const onPanChange = (event) => {
-    setPan(event.target.value)
+    setPan(event.target.value.replace(/\s/g, ''))
   }
 
   const onCvcChange = (event) => {
@@ -27,10 +29,34 @@ const CardIndex = () => {
 
   const onSubmit = (event) => {
     event.preventDefault()
+    const [_month, year] = month.split('/')
     const formData = {
-      cvc, month, pan, orderId
+      cvc, month: _month, year, pan, orderId
     }
-    console.log(formData)
+    setIsPaymentStarted(true)
+    fetch('/api/orders/card-payment', {
+      method: "POST", 
+      body: JSON.stringify(formData), 
+      headers: {'Content-Type': 'application/json'}
+    }).then(res => res.json()).then(data => {
+      if (data.errorCode != 0) {
+        return setIsPaymentStartedMessage("Paiement échoué avec l'erreur: " + data.info)
+      }
+      
+      setIsPaymentStartedMessage(data.info)
+      if (data.redirect) {
+        return window.location.assign(data.redirect)
+      }
+      return window.location.assign(data.ascRedirect)
+    })
+  }
+
+  if (isPaymentStarted) {
+    return (
+      <PageContainer>
+        <Loader message={isPaymentStartedMessage} />
+      </PageContainer>
+    )
   }
 
   return (

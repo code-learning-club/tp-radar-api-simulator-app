@@ -15,5 +15,5 @@ $app->post('/api/carts', 'ApiController::pushToCart');
 $app->delete('/api/carts/clear', 'ApiController::clearCart');
 
 $app->post('/api/orders', 'ApiController::processOrder');
-$app->post('/api/orders/card', 'ApiController::processOrderForCard');
+$app->post('/api/orders/card-payment', 'ApiController::processOrderPaymentForCard');
 $app->post('/api/callback', 'ApiController::processPaymentCallback');

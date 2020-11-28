@@ -37,12 +37,12 @@ const CartIndex = () => {
   }
 
   const onOrderWithIntegredCard = () => {
-    fetch('/api/orders/card', {
+    fetch('/api/orders', {
       method: 'POST'
     }).then(res => res.json())
       .then(data => {
         setIsPayment(true)
-        window.location.assign('/cards?order_id=' + data.id)
+        window.location.assign('/cards?order_id=' + data.order_id)
         setCarts([])
       })
   }

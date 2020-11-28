@@ -144,7 +144,7 @@ class ApiController extends Controller
         $request->session()->add('carts', []);
         $this->productService->updateOrder($order->id, ['status' => 'pending']);
 
-        $response = $radarPaymentService->register($order->id, $amount = $order->getAmounts());
+        $response = $radarPaymentService->register($order->id, $amount = $order->getAmounts(), 'PAIEMENT DU '.date('d/m/Y H:i:s'));
 
         $this->productService->updateOrder($order->id, ['order_id' => $response['orderId']]);
 
@@ -160,17 +160,13 @@ class ApiController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function processOrderForCard(Request $request)
+    public function processOrderPaymentForCard(Request $request, RadarPaymentService $radarPaymentService)
     {
-        $carts = $request->session()->get('carts', []);
+        $data = $request->all();
 
-        $order = $this->productService->createOrder($carts);
+        $response = $radarPaymentService->makeCardPayment($data['orderId'], $data['pan'], $data['cvc'], $data['year'], $data['month']);
 
-        $request->session()->add('carts', []);
-
-        $this->productService->updateOrder($order->id, ['status' => 'pending']);
-
-        return $order;
+        return $response;
     }
 
     /**
