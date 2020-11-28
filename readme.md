@@ -18,15 +18,15 @@ The RADAR payment API simulator.
 
 ### VISA
 
-Card number: 4111 1111 1111 1111
-Expiry date: 2024/12
-CVC/CVV: 123
-3-D Secure: veres=y, pares=y
-3-D Secure verification code: 12345678
+- Card number: 4111 1111 1111 1111
+- Expiry date: 2024/12
+- CVC/CVV: 123
+- 3-D Secure: veres=y, pares=y
+- 3-D Secure verification code: 12345678
 
 ### MasterCard
 
-Card number: 5555 5555 5555 5599
-Expiry date: 2024/12
-CVC/CVV: 123
-3-D Secure: veres=n
+- Card number: 5555 5555 5555 5599
+- Expiry date: 2024/12
+- CVC/CVV: 123
+- 3-D Secure: veres=n
