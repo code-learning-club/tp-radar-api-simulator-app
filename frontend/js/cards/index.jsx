@@ -98,7 +98,7 @@ const CardIndex = () => {
                 <div className="form-group">
                   <label htmlFor="cardExpiry"><span>EXP</span> DATE</label>
                   <input 
-                    type="tel" 
+                    type="text" 
                     className="form-control" 
                     name="month"
                     placeholder="MM / YY"

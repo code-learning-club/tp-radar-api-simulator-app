@@ -327,7 +327,7 @@ var CardIndex = function CardIndex() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "cardExpiry"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "EXP"), " DATE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "tel",
+    type: "text",
     className: "form-control",
     name: "month",
     placeholder: "MM / YY",
@@ -28895,7 +28895,7 @@ if (false) {} else {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/papac/Dev/Jobs/tp-radar-api-simulator/frontend/js/cards/index.jsx */"./frontend/js/cards/index.jsx");
+module.exports = __webpack_require__(/*! C:\Dev\Job\tp-radar-api-simulator-app\frontend\js\cards\index.jsx */"./frontend/js/cards/index.jsx");
 
 
 /***/ })
