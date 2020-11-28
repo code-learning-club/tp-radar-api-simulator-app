@@ -28893,7 +28893,7 @@ if (false) {} else {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Dev\Job\tp-radar-api-simulator-app\frontend\js\products\index.jsx */"./frontend/js/products/index.jsx");
+module.exports = __webpack_require__(/*! /home/papac/Dev/Jobs/tp-radar-api-simulator/frontend/js/products/index.jsx */"./frontend/js/products/index.jsx");
 
 
 /***/ })
