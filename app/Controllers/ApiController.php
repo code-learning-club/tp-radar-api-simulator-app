@@ -142,14 +142,14 @@ class ApiController extends Controller
         $order = $this->productService->createOrder($carts);
 
         $request->session()->add('carts', []);
-        $order->where('id', $order->id)->update(['status' => 'pending']);
+        $this->productService->updateOrder($order->id, ['status' => 'pending']);
 
         $response = $radarPaymentService->register($order->id, $amount = $order->getAmounts());
 
+        $this->productService->updateOrder($order->id, ['order_id' => $response['orderId']]);
+
         $order->order_id = $response['orderId'];
         $order->form_url = $response['formUrl'];
-
-        $order->where('id', $order->id)->update(['order_id' => $response['orderId']]);
 
         return $order;
     }
@@ -162,6 +162,8 @@ class ApiController extends Controller
      */
     public function processPaymentCallback(Request $request)
     {
+        $order_id = $request->get('order_id');
 
+        $this->productService->updateOrderStatus($order_id, 'success');
     }
 }

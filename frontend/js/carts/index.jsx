@@ -7,6 +7,7 @@ import Cart from "./Cart"
 const CartIndex = () => {
   const [carts, setCarts] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
+  const [isPayment, setIsPayment] = useState(false)
 
   useEffect(() => {
     fetch('/api/carts')
@@ -28,7 +29,11 @@ const CartIndex = () => {
     fetch('/api/orders', {
       method: 'POST'
     }).then(res => res.json())
-      .then(data => setCarts([]))
+      .then(data => {
+        setIsPayment(true)
+        window.location.assign(data.form_url)
+        setCarts([])
+      })
   }
 
   if (!isLoaded) {
@@ -39,7 +44,15 @@ const CartIndex = () => {
     )
   }
 
-  if (isLoaded && carts.length == 0) {
+  if (!isPayment) {
+    return (
+      <PageContainer>
+        <Loader message="Chargement de la page de paiement..." />
+      </PageContainer>
+    )
+  }
+
+  if (isLoaded && carts.length == 0 && !isPayment) {
     return (
       <PageContainer>
         <Loader message="Le panier est vide" />

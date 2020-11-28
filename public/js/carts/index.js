@@ -225,6 +225,11 @@ var CartIndex = function CartIndex() {
       isLoaded = _useState4[0],
       setIsLoaded = _useState4[1];
 
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      isPayment = _useState6[0],
+      setIsPayment = _useState6[1];
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     fetch('/api/carts').then(function (res) {
       return res.json();
@@ -250,7 +255,9 @@ var CartIndex = function CartIndex() {
     }).then(function (res) {
       return res.json();
     }).then(function (data) {
-      return setCarts([]);
+      setIsPayment(true);
+      window.location.assign(data.form_url);
+      setCarts([]);
     });
   };
 
@@ -260,7 +267,13 @@ var CartIndex = function CartIndex() {
     }));
   }
 
-  if (isLoaded && carts.length == 0) {
+  if (!isPayment) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PageContainer__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Loader__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      message: "Chargement de la page de paiement..."
+    }));
+  }
+
+  if (isLoaded && carts.length == 0 && !isPayment) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PageContainer__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Loader__WEBPACK_IMPORTED_MODULE_2__["default"], {
       message: "Le panier est vide"
     }));

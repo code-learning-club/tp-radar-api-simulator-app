@@ -103,4 +103,16 @@ class ProductService
 
         return $order;
     }
+
+    /**
+     * Update order status
+     *
+     * @param string $order_id
+     * @param array $data
+     * @return mixed
+     */
+    public function updateOrder(string $order_id, array $data)
+    {
+        return $this->order->where('id', $order_id)->update($data);
+    }
 }
