@@ -73,6 +73,10 @@ class RadarPaymentService
      * Make payment via card handler
      *
      * @param string $radar_order_id
+     * @param string $pan
+     * @param string $cvc
+     * @param string $year
+     * @param string $month
      * @return mixed
      */
     public function makeCardPayment(string $radar_order_id, string $pan, string $cvc, string $year, string $month)
